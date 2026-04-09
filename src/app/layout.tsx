@@ -28,17 +28,17 @@ export const metadata: Metadata = {
     "file upload service",
     "100MB image upload"
   ],
-  authors: [{ name: "Shaswat Raj", url: "https://x.com/sh20raj" }],
-  creator: "Shaswat Raj",
+  authors: [{ name: "Kukode", url: "https://x.com/kukode_id" }],
+  creator: "Kukode",
   publisher: "Picser",
-  metadataBase: new URL("https://picser.pages.dev"),
+  metadataBase: new URL("https://upload.kukode.com"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://picser.pages.dev",
+    url: "https://upload.kukode.com",
     siteName: "Picser",
     title: "Picser - Free Image Hosting with GitHub Integration",
     description: "Upload images up to 100MB and get instant shareable URLs. Free image hosting service powered by GitHub with reliable CDN delivery.",
@@ -54,18 +54,18 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@sh20raj",
-    creator: "@sh20raj",
+    site: "@kukode_id",
+    creator: "@kukode_id",
     title: "Picser - Free Image Hosting with GitHub Integration",
     description: "Upload images up to 100MB and get instant shareable URLs. Free image hosting service powered by GitHub.",
     images: ["/og/og-image.png"],
   },
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
     googleBot: {
-      index: true,
-      follow: true,
+      index: false,
+      follow: false,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
@@ -98,7 +98,7 @@ export default function RootLayout({
     "@type": "WebApplication",
     "name": "Picser",
     "description": "Upload images up to 100MB and get instant shareable URLs. Free image hosting service powered by GitHub with reliable CDN delivery.",
-    "url": "https://picser.vercel.app",
+    "url": "https://upload.kukode.com",
     "applicationCategory": "Utility",
     "operatingSystem": "Any",
     "offers": {
@@ -108,8 +108,8 @@ export default function RootLayout({
     },
     "creator": {
       "@type": "Person",
-      "name": "Shaswat Raj",
-      "url": "https://x.com/sh20raj"
+      "name": "Kukode",
+      "url": "https://x.com/kukode_id"
     },
     "featureList": [
       "Upload images up to 100MB",

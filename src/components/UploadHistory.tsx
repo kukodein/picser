@@ -64,7 +64,7 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
 
     return (
         <div className="max-w-4xl mx-auto mt-12">
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 p-8">
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-200/50 p-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center space-x-3">
@@ -73,12 +73,12 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold text-slate-900">Upload History</h2>
-                            <p className="text-slate-600">{history.length} image{history.length !== 1 ? 's' : ''} uploaded</p>
+                            <p className="text-slate-600 hidden">{history.length} image{history.length !== 1 ? 's' : ''} uploaded</p>
                         </div>
                     </div>
                     <button
                         onClick={handleClearHistory}
-                        className="flex items-center space-x-2 px-4 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 font-medium"
+                        className="flex items-center space-x-2 px-4 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 font-medium cursor-pointer"
                     >
                         <Trash2 className="h-4 w-4" />
                         <span>Clear All</span>
@@ -91,6 +91,7 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
                         const bestUrl = getBestUrl(upload);
                         const isCDN = bestUrl.includes('jsdelivr.net');
                         const isPermanent = upload.urls?.jsdelivr_commit || upload.urls?.raw_commit;
+                        const customWebEndpoint = process.env.NEXT_PUBLIC_CUSTOM_WEB_ENDPOINT+"/"+upload.filename;
 
                         return (
                             <div
@@ -109,15 +110,25 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
                                     {/* URL Type Badge */}
                                     <div className="absolute top-2 right-2">
                                         {isCDN && (
-                                            <div className="flex items-center space-x-1 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                                            <div className="flex items-center space-x-1 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium hidden">
                                                 <Zap className="h-3 w-3" />
                                                 <span>CDN</span>
                                             </div>
                                         )}
+                                        <div className="flex items-center space-x-1 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                                            <a
+                                                href={upload.github_url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center space-x-1 transition-colors">
+                                                <span>View Source</span>
+                                                <ExternalLink className="h-3 w-3" />
+                                            </a>
+                                        </div>
                                     </div>
                                     {/* Permanent Badge */}
                                     {isPermanent && (
-                                        <div className="absolute top-2 left-2">
+                                        <div className="absolute top-2 left-2 hidden">
                                             <div className="flex items-center space-x-1 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                                                 <Star className="h-3 w-3" />
                                                 <span>Permanent</span>
@@ -127,9 +138,9 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
                                 </div>
 
                                 {/* Content */}
-                                <div className="p-4 space-y-3">
+                                <div className="p-4 space-y-3_">
                                     {/* File Info */}
-                                    <div>
+                                    <div className="hidden">
                                         <h3 className="font-semibold text-slate-900 truncate text-sm">
                                             {upload.filename}
                                         </h3>
@@ -143,7 +154,7 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
                                     {upload.urls?.jsdelivr_commit && (
                                         <div className="space-y-2">
                                             <div className="flex items-center justify-between">
-                                                <span className="text-xs font-medium text-blue-700 flex items-center space-x-1">
+                                                <span className="text-xs font-medium text-blue-700 flex items-center space-x-1 hidden">
                                                     <Zap className="h-3 w-3" />
                                                     <span>jsDelivr CDN (Permanent)</span>
                                                 </span>
@@ -151,13 +162,43 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
                                             <div className="flex items-center space-x-2">
                                                 <input
                                                     type="text"
+                                                    style={{ width: '50%' }}
+                                                    value={customWebEndpoint}
+                                                    readOnly
+                                                    className="flex-1 px-2 py-1.5 border border-slate-200 rounded-lg text-xs bg-slate-50 font-mono text-slate-700"
+                                                />
+                                                <button
+                                                    onClick={() => copyToClipboard(customWebEndpoint, `${upload.id}-custom`)}
+                                                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors cursor-pointer"
+                                                    title="Copy jsDelivr CDN URL"
+                                                >
+                                                    {copiedId === `${upload.id}-custom` ? (
+                                                        <CheckCircle className="h-3.5 w-3.5 text-green-600" />
+                                                    ) : (
+                                                        <Copy className="h-3.5 w-3.5" />
+                                                    )}
+                                                </button>
+                                                <a
+                                                    href={customWebEndpoint}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                                    title="Open in new tab"
+                                                >
+                                                    <ExternalLink className="h-3.5 w-3.5" />
+                                                </a>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <input
+                                                    type="text"
+                                                    style={{ width: '50%' }}
                                                     value={upload.urls.jsdelivr_commit}
                                                     readOnly
                                                     className="flex-1 px-2 py-1.5 border border-slate-200 rounded-lg text-xs bg-slate-50 font-mono text-slate-700"
                                                 />
                                                 <button
                                                     onClick={() => copyToClipboard(upload.urls!.jsdelivr_commit, `${upload.id}-jsdelivr`)}
-                                                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors cursor-pointer"
                                                     title="Copy jsDelivr CDN URL"
                                                 >
                                                     {copiedId === `${upload.id}-jsdelivr` ? (
@@ -181,7 +222,7 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
 
                                     {/* GitHub URL */}
                                     {upload.github_url && (
-                                        <div className="pt-2 border-t border-slate-100">
+                                        <div className="pt-2 border-t border-slate-100 hidden">
                                             <div className="flex items-center justify-between text-xs text-slate-600 mb-2">
                                                 <span>GitHub Repository</span>
                                                 <a

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+// import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { Upload, Copy, ExternalLink, CheckCircle, AlertCircle, Zap, Star, Link as LinkIcon } from 'lucide-react';
 import { saveToHistory } from '@/utils/storage';
@@ -62,7 +63,13 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps = {}) {
             const result = await response.json();
 
             if (result.success) {
-                setUploadResult(result);
+                // setUploadResult(result);
+                setUploadResult(null);
+                setError(null);
+                setPreviewFile(null);
+                setCopiedUrl(null);
+
+
                 // Save to history with jsDelivr CDN URL as primary
                 saveToHistory({
                     filename: result.filename,
@@ -83,6 +90,29 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps = {}) {
             setUploading(false);
         }
     }, [onUpload]);
+
+    // Paste from clipboard (Ctrl+V / Cmd+V)
+    useEffect(() => {
+        const handlePaste = (e: ClipboardEvent) => {
+            if (uploading) return;
+            const items = e.clipboardData?.items;
+            if (!items) return;
+
+            for (const item of Array.from(items)) {
+                if (item.type.startsWith('image/')) {
+                    const file = item.getAsFile();
+                    if (file) {
+                        e.preventDefault();
+                        handleUpload(file);
+                        break;
+                    }
+                }
+            }
+        };
+
+        window.addEventListener('paste', handlePaste);
+        return () => window.removeEventListener('paste', handlePaste);
+    }, [handleUpload, uploading]);
 
     const handleDrag = useCallback((e: React.DragEvent) => {
         e.preventDefault();
@@ -151,7 +181,7 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps = {}) {
 
     return (
         <div className="max-w-4xl mx-auto">
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 p-8">
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-200/50 p-8">
                 {/* Header */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl mb-4">
@@ -386,8 +416,7 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps = {}) {
                         )}
 
                         <div
-                            className={`
-                                relative border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-200
+                            className={`relative border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-200
                                 ${isDragging
                                     ? 'border-blue-400 bg-blue-50/50 scale-105'
                                     : 'border-slate-300 hover:border-blue-400 hover:bg-blue-50/30'
@@ -431,6 +460,16 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps = {}) {
                                         <span>Permanent URLs</span>
                                     </div>
                                 </div>
+
+                                {/* Paste hint */}
+                                <p className="text-sm text-slate-400 mt-1">
+                                    atau tekan{' '}
+                                    <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-xs font-mono text-slate-600">
+                                        Ctrl+V
+                                    </kbd>
+                                    {' '}untuk paste gambar dari clipboard
+                                </p>
+
                             </div>
                         </div>
                     </div>

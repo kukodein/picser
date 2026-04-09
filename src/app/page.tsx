@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Navigation Header */}
-      <nav className="bg-white/80 backdrop-blur-md shadow-lg border-b border-slate-200/50 sticky top-0 z-50">
+      <nav className="bg-white/80 backdrop-blur-md shadow-md border-b border-slate-200/50 sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -25,9 +25,11 @@ export default function Home() {
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full"></div>
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <Link 
+                  className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent" 
+                  href="/">
                   Picser
-                </h1>
+                </Link>
                 <p className="text-xs text-slate-500 font-medium">Free GitHub Image Hosting</p>
               </div>
             </div>
@@ -35,7 +37,7 @@ export default function Home() {
               <Link
                 href="https://github.com/sh20raj/picser"
                 target="_blank"
-                className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-all duration-200"
+                className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-all duration-200 hidden"
               >
                 <Star className="h-4 w-4" />
                 <span>Star on GitHub</span>
@@ -52,8 +54,15 @@ export default function Home() {
         </div>
       </nav>
 
+      <div id='upload' className="pt-6 pb-8">
+        <div className="container mx-auto px-6">
+          <ImageUploader onUpload={handleNewUpload} />
+          <UploadHistory key={refreshHistory} onNewUpload={() => setRefreshHistory(prev => prev + 1)} />
+        </div>
+      </div>
+
       {/* Hero Section */}
-      <section className="pt-16 pb-8">
+      <section className="pt-6 pb-8">
         <div className="container mx-auto px-6 text-center">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
@@ -68,7 +77,7 @@ export default function Home() {
             </p>
 
             {/* Features Grid */}
-            <div className="grid md:grid-cols-3 gap-6 mb-12 max-w-3xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
               <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-slate-200/50 shadow-sm hover:shadow-md transition-all duration-200">
                 <Zap className="h-8 w-8 text-blue-600 mx-auto mb-3" />
                 <h3 className="font-semibold text-slate-900 mb-2">Lightning Fast CDN</h3>
@@ -89,15 +98,8 @@ export default function Home() {
         </div>
       </section>
 
-      <div id='upload' className="pb-16">
-        <div className="container mx-auto px-6">
-          <ImageUploader onUpload={handleNewUpload} />
-          <UploadHistory key={refreshHistory} onNewUpload={() => setRefreshHistory(prev => prev + 1)} />
-        </div>
-      </div>
-
       {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-md border-t border-slate-200/50 mt-16">
+      <footer className="bg-white/80 backdrop-blur-md border-t border-slate-200/50 mt-6">
         <div className="container mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             {/* Left Side - Brand */}
@@ -141,11 +143,10 @@ export default function Home() {
               <p className="text-sm text-slate-600">
                 Built with ❤️ by{' '}
                 <Link
-                  href="https://github.com/sh20raj"
+                  href="https://kukode.com/"
                   target="_blank"
-                  className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
-                >
-                  @sh20raj
+                  className="text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                  Kukode
                 </Link>
               </p>
               <p className="text-xs text-slate-500 mt-1">
