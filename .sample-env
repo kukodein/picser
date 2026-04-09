@@ -1,4 +1,4 @@
-# Copy this file to .env.local
+# Copy this file and rename to .env.local
 
 GITHUB_TOKEN=
 GITHUB_OWNER=
