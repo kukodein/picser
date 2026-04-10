@@ -163,35 +163,6 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
                                                 <input
                                                     type="text"
                                                     style={{ width: '50%' }}
-                                                    value={customWebEndpoint}
-                                                    readOnly
-                                                    className="flex-1 px-2 py-1.5 border border-slate-200 rounded-lg text-xs bg-slate-50 font-mono text-slate-700"
-                                                />
-                                                <button
-                                                    onClick={() => copyToClipboard(customWebEndpoint, `${upload.id}-custom`)}
-                                                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors cursor-pointer"
-                                                    title="Copy jsDelivr CDN URL"
-                                                >
-                                                    {copiedId === `${upload.id}-custom` ? (
-                                                        <CheckCircle className="h-3.5 w-3.5 text-green-600" />
-                                                    ) : (
-                                                        <Copy className="h-3.5 w-3.5" />
-                                                    )}
-                                                </button>
-                                                <a
-                                                    href={customWebEndpoint}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
-                                                    title="Open in new tab"
-                                                >
-                                                    <ExternalLink className="h-3.5 w-3.5" />
-                                                </a>
-                                            </div>
-                                            <div className="flex items-center space-x-2">
-                                                <input
-                                                    type="text"
-                                                    style={{ width: '50%' }}
                                                     value={upload.urls.jsdelivr_commit}
                                                     readOnly
                                                     className="flex-1 px-2 py-1.5 border border-slate-200 rounded-lg text-xs bg-slate-50 font-mono text-slate-700"
@@ -217,12 +188,41 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
                                                     <ExternalLink className="h-3.5 w-3.5" />
                                                 </a>
                                             </div>
+                                            <div className="flex items-center space-x-2">
+                                                <input
+                                                    type="text"
+                                                    style={{ width: '50%' }}
+                                                    value={customWebEndpoint}
+                                                    readOnly
+                                                    className="flex-1 px-2 py-1.5 border border-slate-200 rounded-lg text-xs bg-slate-50 font-mono text-slate-700"
+                                                />
+                                                <button
+                                                    onClick={() => copyToClipboard(customWebEndpoint, `${upload.id}-custom`)}
+                                                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors cursor-pointer"
+                                                    title="Copy jsDelivr CDN URL"
+                                                >
+                                                    {copiedId === `${upload.id}-custom` ? (
+                                                        <CheckCircle className="h-3.5 w-3.5 text-green-600" />
+                                                    ) : (
+                                                        <Copy className="h-3.5 w-3.5" />
+                                                    )}
+                                                </button>
+                                                <a
+                                                    href={customWebEndpoint}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                                    title="Open in new tab"
+                                                >
+                                                    <ExternalLink className="h-3.5 w-3.5" />
+                                                </a>
+                                            </div>
                                         </div>
                                     )}
 
                                     {/* GitHub URL */}
                                     {upload.github_url && (
-                                        <div className="pt-2 border-t border-slate-100 hidden">
+                                        <div className="pt-2 border-t border-slate-100">
                                             <div className="flex items-center justify-between text-xs text-slate-600 mb-2">
                                                 <span>GitHub Repository</span>
                                                 <a
