@@ -35,7 +35,7 @@ export default function Home() {
             </div>
             <div className="flex items-center space-x-4">
               <Link
-                href="https://github.com/sh20raj/picser"
+                href="https://i.exe.my.id/"
                 target="_blank"
                 className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 rounded-lg transition-all duration-200 hidden"
               >
@@ -47,7 +47,7 @@ export default function Home() {
                 className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 <BookOpen className="h-4 w-4" />
-                <span>API Docs</span>
+                <span>Main</span>
               </Link>
             </div>
           </div>

@@ -63,7 +63,7 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
     }
 
     return (
-        <div className="max-w-4xl mx-auto mt-12">
+        <div className="max-w-4xl mx-auto mt-6">
             <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-200/50 p-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
@@ -110,12 +110,12 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
                                     {/* URL Type Badge */}
                                     <div className="absolute top-2 right-2">
                                         {isCDN && (
-                                            <div className="flex items-center space-x-1 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium hidden">
+                                            <div className="flex items-center space-x-1 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                                                 <Zap className="h-3 w-3" />
                                                 <span>CDN</span>
                                             </div>
                                         )}
-                                        <div className="flex items-center space-x-1 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                                        <div className="flex items-center space-x-1 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium hidden">
                                             <a
                                                 href={upload.github_url}
                                                 target="_blank"
@@ -222,7 +222,7 @@ export default function UploadHistoryComponent({ onNewUpload }: UploadHistoryPro
 
                                     {/* GitHub URL */}
                                     {upload.github_url && (
-                                        <div className="pt-2 border-t border-slate-100">
+                                        <div className="mt-2 border-t border-slate-100 hidden">
                                             <div className="flex items-center justify-between text-xs text-slate-600 mb-2">
                                                 <span>GitHub Repository</span>
                                                 <a

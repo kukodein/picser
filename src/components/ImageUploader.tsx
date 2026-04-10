@@ -463,11 +463,11 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps = {}) {
 
                                 {/* Paste hint */}
                                 <p className="text-sm text-slate-400 mt-1">
-                                    atau tekan{' '}
+                                    Or type{' '}
                                     <kbd className="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-xs font-mono text-slate-600">
                                         Ctrl+V
                                     </kbd>
-                                    {' '}untuk paste gambar dari clipboard
+                                    {' '}for paste an image from clipboard.
                                 </p>
 
                             </div>
